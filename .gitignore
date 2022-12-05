@@ -1,1 +1,8 @@
 /target
+Cargo.lock
+
+# Make output
+/builddir
+
+# IntelliJ platforms
+/.idea
