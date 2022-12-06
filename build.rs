@@ -1,7 +1,6 @@
 extern crate core;
 
 use std::env;
-use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 
 fn main() {
@@ -119,6 +118,7 @@ fn main() {
         env::set_var("CRATE_CC_NO_DEFAULTS", "1");
         cmake_cfg
             .cflag("-mcpu=cortex-m33")
+            .cflag("-mthumb")
             .cflag("-mfloat-abi=hard")
             .cflag("-mfpu=fpv5-sp-d16");
     }

@@ -3,7 +3,7 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-#[cfg(feature = "vfp")]
-pub mod ffi_vfp;
+#[cfg(feature = "ffi")]
+pub mod ffi;
 
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));

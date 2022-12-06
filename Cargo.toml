@@ -14,9 +14,9 @@ bindgen = "0.63"
 regex = "1"
 
 [features]
-default = ["vfp"]
+default = ["ffi"]
 
-vfp = ["micromath"]
+ffi = ["micromath"]
 
 cortex-m33 = []
 
