@@ -2,6 +2,7 @@
 name = "cmsisdsp-sys"
 version = "0.1.0"
 edition = "2021"
+authors = ["Sander Wittwer <sander.wittwer@grindoy.no"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
