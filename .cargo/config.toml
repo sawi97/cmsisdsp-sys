@@ -1,8 +1,0 @@
-[target.thumbv8m.main-none-eabi]
-rustflags = [
-  "-C", "link-arg=-Wl,-Tlink.x",
-  "-C", "link-arg=-nostartfiles",
-]
-
-[build]
-target = "thumbv8m.main-none-eabihf" # Cortex-M33 Hard Float
