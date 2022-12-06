@@ -123,13 +123,6 @@ fn main() {
             .cflag("-mfpu=fpv5-sp-d16");
     }
 
-    // Remove default FFT tables to reduce binary size (caused by mcpu for some reason)
-    // TODO: Configurable fft sizes
-    cmake_cfg
-        .define("CONFIGTABLE", "ON")
-        .define("ALLFAST", "ON")
-        .define("DISABLEFLOAT16", "ON");
-
     let dst = cmake_cfg.build();
 
     println!("cargo:rustc-link-search=native={}", dst.join("build/Source").display());
