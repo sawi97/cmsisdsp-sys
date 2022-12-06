@@ -8,6 +8,7 @@ edition = "2021"
 micromath = { version="2", optional=true }
 
 [build-dependencies]
+cmake = "0.1"
 bindgen = "0.63"
 regex = "1"
 
@@ -15,3 +16,15 @@ regex = "1"
 default = ["vfp"]
 
 vfp = ["micromath"]
+
+cortex-m33 = []
+
+[profile.dev]
+opt-level = 1
+debug = true
+lto = 'thick'
+
+[profile.release]
+opt-level = 3
+debug = true
+lto = 'thick'

@@ -5,7 +5,6 @@ use std::io::{self, Write};
 use std::path::{Path, PathBuf};
 
 fn main() {
-    println!("cargo:rerun-if-changed=Makefile");
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=wrapper.h");
 
@@ -33,13 +32,6 @@ fn main() {
         .clang_arg("-target")
         .clang_arg("arm")
         .clang_arg("-mcpu=cortex-m33")
-        .clang_arg("-DDISABLEFLOAT16")
-        .clang_arg("-DARM_DSP_CONFIG_TABLES")
-        .clang_arg("-DARM_FAST_ALLOW_TABLES")
-        .clang_arg("-DARM_FFT_ALLOW_TABLES")
-        .clang_arg("-DARM_FFT_ALLOW_TABLES")
-        .clang_arg("-D__ICCARM__")
-        .clang_arg("-D__ARMVFP__")
         .clang_arg("-mfloat-abi=hard")
         .use_core();
 
@@ -111,10 +103,35 @@ fn main() {
     // Write bindings to bindings.rs
     std::fs::write(outdir.join("bindings.rs"), rust_source).expect("Couldn't write bindgen output");
 
-    // Compile CMSIS-DSP
-    let output = std::process::Command::new("make").spawn().expect("failed to execute 'make'").wait().unwrap();
+    // Compile the library
+    let mut cmake_cfg = cmake::Config::new("cmsis/CMSIS-DSP");
 
-    // Link
-    println!("cargo:rustc-link-search={}", manifest_dir.join("builddir").display());
+    // Set defaults
+    cmake_cfg.build_target("CMSISDSP")
+        .define("CMSISCORE", manifest_dir.join("cmsis/CMSIS_5/CMSIS/Core"))
+        .define("CMAKE_TRY_COMPILE_TARGET_TYPE", "STATIC_LIBRARY")
+        .cflag("-Ofast")
+        .cflag("-ffast-math");
+
+    // Set build target and disable target flags  (for specific CPU's)
+    #[cfg(feature = "cortex-m33")]
+    {
+        env::set_var("CRATE_CC_NO_DEFAULTS", "1");
+        cmake_cfg
+            .cflag("-mcpu=cortex-m33")
+            .cflag("-mfloat-abi=hard")
+            .cflag("-mfpu=fpv5-sp-d16");
+    }
+
+    // Remove default FFT tables to reduce binary size (caused by mcpu for some reason)
+    // TODO: Configurable fft sizes
+    cmake_cfg
+        .define("CONFIGTABLE", "ON")
+        .define("ALLFAST", "ON")
+        .define("DISABLEFLOAT16", "ON");
+
+    let dst = cmake_cfg.build();
+
+    println!("cargo:rustc-link-search=native={}", dst.join("build/Source").display());
     println!("cargo:rustc-link-lib=static=CMSISDSP");
 }
