@@ -19,6 +19,7 @@ default = ["ffi"]
 ffi = ["libm"]
 
 cortex-m33 = []
+intrinsics = []
 
 [profile.dev]
 opt-level = 1

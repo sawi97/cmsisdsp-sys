@@ -2,6 +2,7 @@
 #![allow(non_upper_case_globals)]
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
+#![cfg_attr(feature = "intrinsics", feature(core_intrinsics))]
 
 #[cfg(feature = "ffi")]
 pub mod ffi;
