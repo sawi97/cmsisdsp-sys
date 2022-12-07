@@ -1,6 +1,6 @@
 [package]
 name = "cmsisdsp-sys"
-version = "0.1.0-1.14.2"
+version = "1.14.2"
 edition = "2021"
 authors = ["Sander Wittwer <sander.wittwer@grindoy.no"]
 
