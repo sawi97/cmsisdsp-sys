@@ -3,6 +3,8 @@ extern crate core;
 use std::env;
 use std::path::{Path, PathBuf};
 
+static CONFIG_KEY: &str = "CMSISDSP_CFG";
+
 fn main() {
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=wrapper.h");
@@ -123,8 +125,24 @@ fn main() {
             .cflag("-mfpu=fpv5-sp-d16");
     }
 
+    // Read environment from config
+    if let Ok(cfg) = env::var(CONFIG_KEY) {
+        println!("{} variable set, reading config", CONFIG_KEY);
+        parse_cfg(&cfg, &mut cmake_cfg);
+    }
+
+    // Compile the crate
     let dst = cmake_cfg.build();
 
     println!("cargo:rustc-link-search=native={}", dst.join("build/Source").display());
     println!("cargo:rustc-link-lib=static=CMSISDSP");
+}
+
+/// Parse config from the environment variable
+fn parse_cfg(cfg_str: &str, cfg: &mut cmake::Config) {
+    let re = regex::Regex::new(r"\-D(\w+)=(\w+)").unwrap();
+    for m in re.captures_iter(cfg_str) {
+        println!("adding cmake flag {}={}", &m[1], &m[2]);
+        cfg.define(&m[1], &m[2]);
+    }
 }
