@@ -1,5 +1,3 @@
-extern crate core;
-
 use std::env;
 use std::path::{Path, PathBuf};
 

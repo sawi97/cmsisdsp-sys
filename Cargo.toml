@@ -4,7 +4,6 @@ version = "1.14.2"
 edition = "2021"
 authors = ["Sander Wittwer <sander.wittwer@grindoy.no"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [dependencies]
 libm = { version="0.2", optional=true }
 
@@ -20,13 +19,3 @@ ffi = ["libm"]
 
 cortex-m33 = []
 intrinsics = []
-
-[profile.dev]
-opt-level = 1
-debug = true
-lto = 'thick'
-
-[profile.release]
-opt-level = 3
-debug = true
-lto = 'thick'
