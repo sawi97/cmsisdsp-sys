@@ -1,7 +1,6 @@
 //! FFI for some basic math functions.
 //!
 //! Some optimizations are achieved by enabling the `intrinsics` feature.
-
 #[no_mangle]
 pub unsafe extern "C" fn exp(v: f64) -> f64 {
     libm::exp(v)
@@ -32,7 +31,7 @@ pub unsafe extern "C" fn powf(b: f32, e: f32) -> f32 {
     libm::powf(b, e)
 }
 
-#[cfg(feature = "intrinsics")]
+#[cfg(all(feature = "intrinsics", feature = "cortex-m33"))]
 #[no_mangle]
 pub unsafe extern "C" fn sqrtf(v: f32) -> f32 {
     core::intrinsics::sqrtf32(v)
@@ -44,13 +43,6 @@ pub unsafe extern "C" fn sqrtf(v: f32) -> f32 {
     libm::sqrtf(v)
 }
 
-#[cfg(feature = "intrinsics")]
-#[no_mangle]
-pub unsafe extern "C" fn sqrt(v: f64) -> f64 {
-    core::intrinsics::sqrtf64(v)
-}
-
-#[cfg(not(feature = "intrinsics"))]
 #[no_mangle]
 pub unsafe extern "C" fn sqrt(v: f64) -> f64 {
     libm::sqrt(v)
