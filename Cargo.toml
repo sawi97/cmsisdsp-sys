@@ -9,7 +9,7 @@ libm = { version="0.2", optional=true }
 
 [build-dependencies]
 cmake = "0.1"
-bindgen = "0.63"
+bindgen = "0.64"
 regex = "1"
 
 [features]
