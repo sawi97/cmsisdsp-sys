@@ -42,9 +42,7 @@ fn main() {
     let bindings = bb.generate().expect("Unable to generate bindings");
 
     // Write the bindings to the $OUT_DIR/bindings.rs file.
-    let mut rust_source = format_docs(bindings.to_string());
-
-    // Write bindings to bindings.rs
+    let rust_source = format_docs(bindings.to_string());
     std::fs::write(outdir.join("bindings.rs"), rust_source).expect("Couldn't write bindgen output");
 
     // Compile the library
