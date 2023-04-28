@@ -1,6 +1,6 @@
 [package]
 name = "cmsisdsp-sys"
-version = "1.14.3"
+version = "1.14.4"
 edition = "2021"
 authors = ["Sander Wittwer <sander.wittwer@grindoy.no"]
 
@@ -9,7 +9,7 @@ libm = { version="0.2", optional=true }
 
 [build-dependencies]
 cmake = "0.1"
-bindgen = "0.64"
+bindgen = "0.65"
 regex = "1"
 
 [features]

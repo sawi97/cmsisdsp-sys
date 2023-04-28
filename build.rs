@@ -24,16 +24,13 @@ fn main() {
         .derive_default(false)
         .ctypes_prefix("core::ffi")
         .generate_comments(true)
-        .rustfmt_bindings(true)
+        .formatter(bindgen::Formatter::Rustfmt)
         .clang_arg(format!("-I{}", manifest_dir.join("include").display()))
         .clang_arg(format!("-I{}", dsp_dir.join("Include").display()))
-        .clang_arg(format!("-I{}", dsp_dir.join("PrivateInclude").display()))
         .clang_arg(format!("-I{}", cmsis5_dir.join("CMSIS/Core/Include").display()))
         .clang_arg("-nostdinc")
         .clang_arg("-target")
         .clang_arg("arm")
-        .clang_arg("-mcpu=cortex-m33")
-        .clang_arg("-mfloat-abi=hard")
         .use_core();
 
     let cmd = bb.command_line_flags().join(" ");
