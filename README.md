@@ -4,7 +4,7 @@ This crate provides Rust bindings for the CMSIS DSP library. The bindings are ge
 
 ## Documentation
 
-The documentation for the CMSIS DSP library can be found [here](https://arm-software.github.io/CMSIS_5/DSP/html/index.html).
+The documentation for the CMSIS DSP library can be found [here](https://arm-software.github.io/CMSIS-DSP/v1.14.4/index.html).
 
 ## Configuration
 
