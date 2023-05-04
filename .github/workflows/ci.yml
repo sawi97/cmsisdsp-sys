@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test-x86:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run tests
+        run: cargo test --verbose
+
+  build-m33-dsp:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Add target
+        run: rustup target add thumbv8m.main-none-eabihf
+      - name: Run tests
+        run: cargo +nightly build --target thumbv8m.main-none-eabihf --features ffi,cortex-m33-dsp,intrinsics

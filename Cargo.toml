@@ -13,9 +13,10 @@ bindgen = "0.65"
 regex = "1"
 
 [features]
-default = ["ffi"]
-
 ffi = ["libm"]
 
-cortex-m33 = []
+cortex-m33-dsp = []
 intrinsics = []
+
+[lib]
+doctest = false

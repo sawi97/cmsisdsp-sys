@@ -29,8 +29,6 @@ fn main() {
         .clang_arg(format!("-I{}", dsp_dir.join("Include").display()))
         .clang_arg(format!("-I{}", cmsis5_dir.join("CMSIS/Core/Include").display()))
         .clang_arg("-nostdinc")
-        .clang_arg("-target")
-        .clang_arg("arm")
         .use_core();
 
     let cmd = bb.command_line_flags().join(" ");
@@ -53,7 +51,7 @@ fn main() {
         .cflag("-ffast-math");
 
     // Set build target and disable target flags  (for specific CPU's)
-    #[cfg(feature = "cortex-m33")]
+    #[cfg(feature = "cortex-m33-dsp")]
     {
         env::set_var("CRATE_CC_NO_DEFAULTS", "1");
         cmake_cfg

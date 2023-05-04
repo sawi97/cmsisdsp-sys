@@ -1,6 +1,8 @@
-//! FFI for some basic math functions.
+//! FFI for some basic math functions required by the CMSIS DSP library.
 //!
-//! Some optimizations are achieved by enabling the `intrinsics` feature.
+//! These can be enabled with the [fft] feature.
+//!
+//! Some optimizations can achieved by enabling the `intrinsics` feature for specific cpus.
 #[no_mangle]
 pub unsafe extern "C" fn exp(v: f64) -> f64 {
     libm::exp(v)
@@ -31,7 +33,7 @@ pub unsafe extern "C" fn powf(b: f32, e: f32) -> f32 {
     libm::powf(b, e)
 }
 
-#[cfg(all(feature = "intrinsics", feature = "cortex-m33"))]
+#[cfg(all(feature = "intrinsics", feature = "cortex-m33-dsp"))]
 #[no_mangle]
 pub unsafe extern "C" fn sqrtf(v: f32) -> f32 {
     core::intrinsics::sqrtf32(v)
