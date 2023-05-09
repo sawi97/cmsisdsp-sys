@@ -10,7 +10,6 @@ pub mod ffi;
 
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -25,5 +24,4 @@ mod tests {
         unsafe { arm_abs_f64(vin.as_ptr(), vin.as_mut_ptr(), vin.len() as u32) }
         assert_eq!(vin, [1.0, 0.0, 1.0]);
     }
-
 }

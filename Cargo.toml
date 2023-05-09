@@ -15,8 +15,10 @@ regex = "1"
 [features]
 ffi = ["libm"]
 
-cortex-m33-dsp = []
+# Enable unstable instrinsics features
 intrinsics = []
+
+cortex-m33-dsp = []
 
 [lib]
 doctest = false

@@ -27,7 +27,10 @@ fn main() {
         .formatter(bindgen::Formatter::Rustfmt)
         .clang_arg(format!("-I{}", manifest_dir.join("include").display()))
         .clang_arg(format!("-I{}", dsp_dir.join("Include").display()))
-        .clang_arg(format!("-I{}", cmsis5_dir.join("CMSIS/Core/Include").display()))
+        .clang_arg(format!(
+            "-I{}",
+            cmsis5_dir.join("CMSIS/Core/Include").display()
+        ))
         .clang_arg("-nostdinc")
         .use_core();
 
@@ -44,7 +47,8 @@ fn main() {
     let mut cmake_cfg = cmake::Config::new("cmsis/CMSIS-DSP");
 
     // Set defaults
-    cmake_cfg.build_target("CMSISDSP")
+    cmake_cfg
+        .build_target("CMSISDSP")
         .define("CMSISCORE", manifest_dir.join("cmsis/CMSIS_5/CMSIS/Core"))
         .define("CMAKE_TRY_COMPILE_TARGET_TYPE", "STATIC_LIBRARY")
         .cflag("-Ofast")
@@ -70,7 +74,10 @@ fn main() {
     // Compile the crate
     let dst = cmake_cfg.build();
 
-    println!("cargo:rustc-link-search=native={}", dst.join("build/Source").display());
+    println!(
+        "cargo:rustc-link-search=native={}",
+        dst.join("build/Source").display()
+    );
     println!("cargo:rustc-link-lib=static=CMSISDSP");
 }
 
@@ -88,7 +95,10 @@ fn format_docs(mut source: String) -> String {
     source = source.replace("#[doc = \" @{\"]", "");
 
     // Format @param as list element
-    let re = regex::Regex::new(r"\s*@[pP]aram\s*(\[(?P<typ>[\w,\s]+)\s*\])?\s*(\\t)?(?P<var>[\w\.]+)\s+").unwrap();
+    let re = regex::Regex::new(
+        r"\s*@[pP]aram\s*(\[(?P<typ>[\w,\s]+)\s*\])?\s*(\\t)?(?P<var>[\w\.]+)\s+",
+    )
+    .unwrap();
     source = re.replace_all(&source, " * `$var` $typ - ").into();
 
     // Format @p/@a/@c arguments as inline code
@@ -100,10 +110,10 @@ fn format_docs(mut source: String) -> String {
     source = re.replace_all(&source, "$pre[$var]").into();
 
     // #nrf_*
-    let re = regex::Regex::new("(?P<pre>#\\[doc.*\\s+)#(?P<var>(nrf|NRF)_\\w+)(?P<post>\\s+.*\"\\])").unwrap();
-    source = re
-        .replace_all(&source, "$pre[$var]$post")
-        .into();
+    let re =
+        regex::Regex::new("(?P<pre>#\\[doc.*\\s+)#(?P<var>(nrf|NRF)_\\w+)(?P<post>\\s+.*\"\\])")
+            .unwrap();
+    source = re.replace_all(&source, "$pre[$var]$post").into();
 
     // Remove @addtogroup stuff
     let re = regex::RegexBuilder::new(r"^#\[doc.*@addtogroup(.|\n)*?^$")
@@ -124,9 +134,7 @@ fn format_docs(mut source: String) -> String {
 
     // Format inline @brief
     let re = regex::Regex::new("#\\[doc = \"\\s*@brief\\s*(?P<msg>.*)\"]").unwrap();
-    source = re
-        .replace_all(&source, "#[doc = \"$msg\"]")
-        .into();
+    source = re.replace_all(&source, "#[doc = \"$msg\"]").into();
 
     // Format inline @note as bold
     let re = regex::Regex::new(r"\s*@note:?\s*").unwrap();

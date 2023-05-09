@@ -41,4 +41,4 @@ jobs:
         with:
           use-cross: true
           command: build
-          args:  --target thumbv8m.main-none-eabihf --features ffi,cortex-m33-dsp,intrinsics
+          args: --target thumbv8m.main-none-eabihf --features ffi,cortex-m33-dsp,intrinsics
