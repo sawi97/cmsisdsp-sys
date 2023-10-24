@@ -65,7 +65,7 @@ fn main() {
             .cflag("-mfpu=fpv5-sp-d16");
     }
 
-    // Read environment from config
+    // Read config from environment
     if let Ok(cfg) = env::var(CONFIG_KEY) {
         println!("{} variable set, reading config", CONFIG_KEY);
         parse_cfg(&cfg, &mut cmake_cfg);

@@ -3,14 +3,16 @@ name = "cmsisdsp-sys"
 version = "1.14.4"
 edition = "2021"
 authors = ["Sander Wittwer <sander.wittwer@grindoy.no"]
+description = "CMSIS-DSP Rust bindings"
 
 [dependencies]
 libm = { version="0.2", optional=true }
 
 [build-dependencies]
 cmake = "0.1"
-bindgen = "0.65"
+bindgen = "0.68"
 regex = "1"
+doxygen-rs = "0.4.2"
 
 [features]
 ffi = ["libm"]
