@@ -1,4 +1,4 @@
-# CMSIS DSP Rust bindings
+# CMSIS DSP Rust bindings [![CI](https://github.com/sawi97/cmsisdsp-sys/actions/workflows/ci.yml/badge.svg)](https://github.com/sawi97/cmsisdsp-sys/actions/workflows/ci.yml)
 
 This crate provides Rust bindings for the CMSIS DSP library. The bindings are generated using bindgen.
 
