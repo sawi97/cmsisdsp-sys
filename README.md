@@ -9,12 +9,12 @@ The documentation for the CMSIS DSP library can be found [here](https://arm-soft
 ## Configuration
 
 The CMSIS DSP library can be configured using the `CMSISDSP_CFG` environment variable. 
-This needs to be the same format as the Cmake command line options from `cmsisdspconfig.py`.
+This needs to be the same format as the Cmake command line options.
 
-Eg, to disable FFT tables (which requires alot of space):
+Eg, to disable loop unrolling and adding matrix checks:
 
-    CMSISDSP_CFG = "-DCONFIGTABLE=ON -DALLFAST=ON"
+    CMSISDSP_CFG = "-DLOOPUNROLL=OFF -DMATRIXCHECK=ON"
 
 Configurations can be obtained by cloning the CMSIS-DSP repo and running:
 
-    streamlit run cmsisdspconfig.py
+    cmake -LH
