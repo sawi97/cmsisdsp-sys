@@ -1,16 +1,16 @@
 [package]
 name = "cmsisdsp-sys"
-version = "1.14.4"
+version = "1.16.2"
 edition = "2021"
 authors = ["Sander Wittwer <sander.wittwer@grindoy.no"]
 description = "CMSIS-DSP Rust bindings"
 
 [dependencies]
-libm = { version="0.2", optional=true }
+libm = { version="0.2.8", optional=true }
 
 [build-dependencies]
-cmake = "0.1"
-bindgen = "0.68"
+cmake = "0.1.51"
+bindgen = "0.70.1"
 regex = "1"
 doxygen-rs = "0.4.2"
 
