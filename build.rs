@@ -32,6 +32,8 @@ fn main() {
             cmsis5_dir.join("CMSIS/Core/Include").display()
         ))
         .clang_arg("-nostdinc")
+        // Allow implicit declarations to avoid pulling target-specific headers
+        .clang_arg("-Wno-implicit-function-declaration")
         .use_core();
 
     let cmd = bb.command_line_flags().join(" ");
